@@ -1,9 +1,8 @@
 package com.github.pambrose.slides
 
-class Slide(val title: String, private val slideContent: SlideContent) {
+class Slide(val title: String, val success: Boolean, private val slideContent: SlideContent) {
   var parentSlide: Slide? = null
   var content: String = ""
-  var success = false
   var verticalChoices = true
   val choices = mutableMapOf<String, String>()
 

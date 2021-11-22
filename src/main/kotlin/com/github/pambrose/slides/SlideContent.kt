@@ -6,8 +6,8 @@ class SlideContent {
   val allSlides = mutableMapOf<String, Slide>()
   lateinit var rootSlide: Slide
 
-  fun slide(title: String, block: Slide.() -> Unit = { }) {
-    Slide(title, this).block()
+  fun slide(title: String, success: Boolean = false, block: Slide.() -> Unit = { }) {
+    Slide(title, success, this).block()
   }
 
   fun validate() {
