@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.0'
+    id "com.github.ben-manes.versions" version '0.39.0'
+}
+
+group 'com.github.pambrose'
+version '1.0.0'
+
+repositories {
+    mavenLocal()
+    maven { url = 'https://kotlin.bintray.com/ktor' }
+    maven { url = 'https://kotlin.bintray.com/kotlinx' }
+    maven { url = 'https://maven-central.storage-download.googleapis.com/repos/central/data/' }
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation "io.github.microutils:kotlin-logging:$logging_version"
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// gradle 7
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+}
