@@ -1,8 +1,8 @@
 package com.github.pambrose.slides
 
-class Slide(val title: String, val success: Boolean, private val slideContent: SlideContent) {
+class Slide(val title: String, val success: Boolean, private val slideDeck: SlideDeck) {
   var parentSlide: Slide? = null
-  var content: String = ""
+  var content = mutableListOf<Element>()
   var verticalChoices = true
   val choices = mutableMapOf<String, String>()
 
@@ -10,8 +10,16 @@ class Slide(val title: String, val success: Boolean, private val slideContent: S
     get() = choices.isNotEmpty()
 
   init {
-    require(title !in slideContent.allSlides.keys) { "Slide titles must be unique: $title" }
-    slideContent.allSlides[title] = this
+    require(title !in slideDeck.allSlides.keys) { "Slide titles must be unique: $title" }
+    slideDeck.allSlides[title] = this
+  }
+
+  fun addText(text: String) {
+    content += TextElement(text)
+  }
+
+  fun addImage(src: String, width: Int, height: Int) {
+    content += ImageElement(src, width, height)
   }
 
   fun verticalChoices() {
@@ -22,7 +30,7 @@ class Slide(val title: String, val success: Boolean, private val slideContent: S
     verticalChoices = false
   }
 
-  fun choice(choice: String, destination: String) {
+  fun addChoice(choice: String, destination: String) {
     choices[choice] = destination
   }
 }

@@ -2,7 +2,7 @@ package com.github.pambrose.slides
 
 import mu.KLogging
 
-class SlideContent {
+class SlideDeck {
   val allSlides = mutableMapOf<String, Slide>()
   lateinit var rootSlide: Slide
 
@@ -43,8 +43,8 @@ class SlideContent {
   }
 
   companion object : KLogging() {
-    fun slideContent(block: SlideContent.() -> Unit) =
-      SlideContent().apply(block).apply { }
+    fun slideDeck(block: SlideDeck.() -> Unit) =
+      SlideDeck().apply(block).apply { }
   }
 }
 
