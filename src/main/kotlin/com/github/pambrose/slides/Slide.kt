@@ -15,11 +15,11 @@ class Slide(val title: String, val success: Boolean, private val slideDeck: Slid
     slideDeck.allSlides[title] = this
   }
 
-  fun addText(text: String) {
+  fun body(text: String) {
     content += TextElement(text)
   }
 
-  fun addImage(src: String, width: Int, height: Int) {
+  fun image(src: String, width: Int, height: Int) {
     content += ImageElement(src, width, height)
   }
 
@@ -31,11 +31,11 @@ class Slide(val title: String, val success: Boolean, private val slideDeck: Slid
     verticalChoices = false
   }
 
-  fun addChoice(choice: String, choiceTitle: String) {
+  fun choice(choice: String, choiceTitle: String) {
     choices[choice] = choiceTitle
   }
 
-  fun addChoice(choice: String, slide: Slide) {
+  fun choice(choice: String, slide: Slide) {
     choices[choice] = slide.title
     slide.embeddedSlide = true
     slide.parentSlide = this
