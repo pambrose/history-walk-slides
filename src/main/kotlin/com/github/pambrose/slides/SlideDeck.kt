@@ -11,6 +11,9 @@ class SlideDeck {
       if (content.isNotEmpty())
         body(content)
       block()
+    }.apply {
+      if (content.isEmpty())
+        body("Default Text")
     }
 
   fun validate() {
@@ -48,6 +51,7 @@ class SlideDeck {
   }
 
   companion object : KLogging() {
+
     fun slideDeck(block: SlideDeck.() -> Unit) =
       SlideDeck().apply(block).apply { }
   }
