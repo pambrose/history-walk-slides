@@ -9,7 +9,7 @@ class Slide(
   var content = mutableListOf<Element>()
   var verticalChoices = true
   var embeddedSlide = false
-  val choices = mutableMapOf<String, Pair<String, Boolean>>()
+  val choices = mutableMapOf<String, String>()
 
   val hasChoices: Boolean
     get() = choices.isNotEmpty()
@@ -35,12 +35,12 @@ class Slide(
     verticalChoices = false
   }
 
-  fun choice(choice: String, choiceTitle: String, advance: Boolean = false) {
-    choices[choice] = choiceTitle to advance
+  fun choice(text: String, choiceTitle: String) {
+    choices[text] = choiceTitle
   }
 
-  fun choice(choice: String, slide: Slide, advance: Boolean = false) {
-    choices[choice] = slide.title to advance
+  fun choice(text: String, slide: Slide) {
+    choices[text] = slide.title
     slide.embeddedSlide = true
     slide.parentSlide = this
   }
