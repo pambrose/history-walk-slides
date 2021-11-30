@@ -12,11 +12,13 @@ class SlideDeck {
 
   fun validate() {
     allSlides.forEach { (title, slide) ->
-      slide.choices.forEach { (_, dest) ->
-        val destSlide = allSlides[dest] ?: error("Missing slide with title: $dest")
-        if (destSlide.parentSlide != null)
-          error("""Parent slide already assigned to: "$dest"""")
-        destSlide.parentSlide = slide
+      slide.choices.forEach { (_, choiceTitle) ->
+        val choiceSlide = allSlides[choiceTitle] ?: error("Missing slide with title: $choiceTitle")
+        if (!choiceSlide.embeddedSlide) {
+          if (choiceSlide.parentSlide != null)
+            error("""Parent slide already assigned to: "$choiceTitle"""")
+          choiceSlide.parentSlide = slide
+        }
       }
 
       if (slide.success && slide.hasChoices)

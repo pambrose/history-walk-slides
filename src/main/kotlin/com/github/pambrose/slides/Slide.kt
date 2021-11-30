@@ -4,6 +4,7 @@ class Slide(val title: String, val success: Boolean, private val slideDeck: Slid
   var parentSlide: Slide? = null
   var content = mutableListOf<Element>()
   var verticalChoices = true
+  var embeddedSlide = false
   val choices = mutableMapOf<String, String>()
 
   val hasChoices: Boolean
@@ -30,7 +31,12 @@ class Slide(val title: String, val success: Boolean, private val slideDeck: Slid
     verticalChoices = false
   }
 
-  fun addChoice(choice: String, destination: String) {
-    choices[choice] = destination
+  fun addChoice(choice: String, choiceTitle: String) {
+    choices[choice] = choiceTitle
+  }
+
+  fun addChoice(choice: String, slide: Slide) {
+    choices[choice] = slide.title
+    slide.embeddedSlide = true
   }
 }
