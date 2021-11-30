@@ -38,5 +38,6 @@ class Slide(val title: String, val success: Boolean, private val slideDeck: Slid
   fun addChoice(choice: String, slide: Slide) {
     choices[choice] = slide.title
     slide.embeddedSlide = true
+    slide.parentSlide = this
   }
 }
