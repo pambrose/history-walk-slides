@@ -6,8 +6,14 @@ class SlideDeck {
   val allSlides = mutableMapOf<String, Slide>()
   lateinit var rootSlide: Slide
 
-  fun slide(title: String, content: String = "", success: Boolean = false, block: Slide.() -> Unit = { }) =
-    Slide(title, success, this).apply {
+  fun slide(
+    title: String,
+    content: String = "",
+    advance: Boolean = false,
+    success: Boolean = false,
+    block: Slide.() -> Unit = { }
+  ) =
+    Slide(title, advance, success, this).apply {
       if (content.isNotEmpty())
         body(content)
       block()

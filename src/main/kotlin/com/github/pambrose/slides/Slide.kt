@@ -1,6 +1,11 @@
 package com.github.pambrose.slides
 
-class Slide(val title: String, val success: Boolean, private val slideDeck: SlideDeck) {
+class Slide(
+  val title: String,
+  val advance: Boolean = false,
+  val success: Boolean,
+  private val slideDeck: SlideDeck
+) {
   var parentSlide: Slide? = null
   var content = mutableListOf<Element>()
   var verticalChoices = true
