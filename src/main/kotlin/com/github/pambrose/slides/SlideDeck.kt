@@ -50,6 +50,8 @@ class SlideDeck {
       }
   }
 
+  fun findSlide(fqName: String) = allSlides[fqName]
+
   fun containsSlide(fqName: String) = allSlides.containsKey(fqName)
 
   fun assignSlide(slide: Slide) {
