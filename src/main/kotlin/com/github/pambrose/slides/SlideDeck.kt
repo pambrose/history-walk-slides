@@ -3,7 +3,7 @@ package com.github.pambrose.slides
 import mu.KLogging
 
 class SlideDeck {
-  val allSlides = mutableMapOf<String, Slide>()
+  private val allSlides = mutableMapOf<String, Slide>()
   lateinit var rootSlide: Slide
 
   fun slide(
@@ -22,18 +22,13 @@ class SlideDeck {
     }
 
   fun validate() {
-    allSlides.forEach { (title, slide) ->
-      slide.choices.forEach { (_, choiceTitle) ->
-        val choiceSlide = allSlides[choiceTitle] ?: error("Missing slide with title: $choiceTitle")
-        if (!choiceSlide.embeddedSlide) {
-          if (choiceSlide.parentSlide != null)
-            error("""Parent slide already assigned to: "$choiceTitle"""")
-          choiceSlide.parentSlide = slide
-        }
-      }
+    allSlides.forEach { (_, slide) ->
+//      slide.choices.forEach { (_, choiceTitle) ->
+//        val choiceSlide = allSlides[choiceTitle] ?: error("Missing slide with title: $choiceTitle")
+//      }
 
       if (slide.success && slide.hasChoices)
-        error("""Slide "$title" has both success and choices""")
+        error("""Slide "${slide.title}" has both success and choices""")
     }
 
     allSlides.filter { it.value.success }.count()
@@ -55,8 +50,13 @@ class SlideDeck {
       }
   }
 
-  companion object : KLogging() {
+  fun containsSlide(fqName: String) = allSlides.containsKey(fqName)
 
+  fun assignSlide(slide: Slide) {
+    allSlides[slide.fqName] = slide
+  }
+
+  companion object : KLogging() {
     fun slideDeck(block: SlideDeck.() -> Unit) =
       SlideDeck().apply(block).apply { }
   }
