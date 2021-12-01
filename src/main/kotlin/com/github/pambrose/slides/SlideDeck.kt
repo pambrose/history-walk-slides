@@ -28,7 +28,7 @@ class SlideDeck {
 //      }
 
       if (slide.success && slide.hasChoices)
-        error("""Slide "${slide.title}" has both success and choices""")
+        error("""Slide "${slide.fqName}" has both success and choices""")
     }
 
     allSlides.filter { it.value.success }.count()
@@ -43,7 +43,7 @@ class SlideDeck {
     rootSlide =
       allSlides.values.filter { it.parentSlide == null }.let { nullParents ->
         when {
-          nullParents.size > 1 -> error("Multiple top-level slides: ${nullParents.map { it.title }}")
+          nullParents.size > 1 -> error("Multiple top-level slides: ${nullParents.map { it.fqName }}")
           nullParents.isEmpty() -> error("Missing a top-level slide")
           else -> nullParents.first()
         }

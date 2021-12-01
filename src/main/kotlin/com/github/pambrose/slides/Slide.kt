@@ -8,7 +8,7 @@ class Slide(
   var parentSlide: Slide? = null
   var content = mutableListOf<String>()
   var verticalChoices = true
-  val choices = mutableMapOf<String, String>()
+  val choices = mutableMapOf<String, Slide>()
   val fqName: String = "${parentSlide?.fqName ?: ""}/$title"
 
   val hasChoices: Boolean
@@ -32,7 +32,7 @@ class Slide(
   }
 
   fun choice(text: String, slide: Slide) {
-    choices[text] = slide.title
+    choices[text] = slide
     slide.parentSlide = this
   }
 }
