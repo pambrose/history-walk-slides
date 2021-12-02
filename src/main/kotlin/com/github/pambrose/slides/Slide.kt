@@ -19,18 +19,12 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
     require(title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
-  fun copyOf(): Slide {
-    val copy = Slide(title, content, root, success, slideDeck)
-    copy.verticalChoices = this.verticalChoices
-    slideDeck.addSlideToDeck(copy)
-    choices.forEach { text, slide ->
-      val newChoice = slide.copyOf().also { it.parentSlide = copy }
-      //this@Slide.slideDeck.addSlideToDeck(newChoice)
-      copy.choices[text] = newChoice
-      logger.info { "Added choice $text} = $newChoice" }
+  fun copyOf(): Slide =
+    Slide(title, content, root, success, slideDeck).also { copy ->
+      copy.verticalChoices = verticalChoices
+      choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
+      slideDeck.addSlideToDeck(copy)
     }
-    return copy
-  }
 
   fun verticalChoices() {
     verticalChoices = true
