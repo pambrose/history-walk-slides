@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.0'
     id "com.github.ben-manes.versions" version '0.39.0'
 }
 
@@ -14,9 +14,6 @@ version '1.2.0'
 
 repositories {
     mavenLocal()
-//    maven { url = 'https://kotlin.bintray.com/ktor' }
-//    maven { url = 'https://kotlin.bintray.com/kotlinx' }
-//    maven { url = 'https://maven-central.storage-download.googleapis.com/repos/central/data/' }
     mavenCentral()
     maven { url = 'https://jitpack.io' }
 }

@@ -10,10 +10,11 @@ class SlideDeck {
   fun slide(
     title: String,
     content: String = "Default Text",
+    root: Boolean = false,
     success: Boolean = false,
     block: Slide.() -> Unit = { }
   ) =
-    Slide(title, content, success, this).apply {
+    Slide(title, content, root, success).apply {
       block()
     }.also { slide ->
       addSlideToDeck(slide)
