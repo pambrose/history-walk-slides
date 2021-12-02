@@ -42,6 +42,6 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
 
   fun validateSlide() {
     if (choices.map { it.value.title }.toSet().size != choices.size)
-      error("Duplicate choice titles")
+      error("""Slide "$title" has duplicate choice titles""")
   }
 }
