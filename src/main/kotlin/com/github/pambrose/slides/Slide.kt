@@ -21,7 +21,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
     return Slide(title, content, root, success)
       .also { copy ->
         copy.verticalChoices = verticalChoices
-        copy.choices.forEach {
+        choices.forEach {
           copy.choices[it.key] = it.value.copyOf().also { it.parentSlide = copy }
         }
       }
@@ -41,9 +41,6 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   }
 
   fun validateSlide() {
-    val items = choices.map { it.value.title }
-    val itemSet = items.toSet()
-    val itemCnt = itemSet.size
     if (choices.map { it.key }.toSet().size != choices.size)
       error("""Slide "$title" has duplicate choice titles""")
   }
