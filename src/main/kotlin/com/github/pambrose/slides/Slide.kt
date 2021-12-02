@@ -20,18 +20,14 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   }
 
   fun copyOf(): Slide {
-    val origChoices = choices
-    val origVertical = verticalChoices
-    return Slide(title, content, root, success, slideDeck)
-      .also { copy ->
-        copy.verticalChoices = origVertical
-        origChoices.forEach {
-          val newSlide = it.value.copyOf().also { it.parentSlide = copy }
-          this@Slide.slideDeck.addSlideToDeck(newSlide)
-          copy.choices[it.key] = newSlide
-          logger.info { "Added choice ${it.key}} = $newSlide" }
-        }
-      }
+    val copy = Slide(title, content, root, success, slideDeck)
+    copy.verticalChoices = this.verticalChoices
+    choices.forEach { text, slide ->
+      val newChoice = slide.copyOf().also { it.parentSlide = copy }
+      this@Slide.slideDeck.addSlideToDeck(newChoice)
+      copy.choices[text] = newChoice
+      logger.info { "Added choice $text} = $newChoice" }
+    }
   }
 
   fun verticalChoices() {
