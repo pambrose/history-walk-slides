@@ -1,5 +1,7 @@
 package com.github.pambrose.slides
 
+import mu.KLogging
+
 class Slide(val title: String, val content: String, val root: Boolean, val success: Boolean) {
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
@@ -24,7 +26,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
         choices.forEach {
           val newSlide = it.value.copyOf().also { it.parentSlide = copy }
           copy.choices[it.key] = newSlide
-          println("Added choice ${it.key}} = $newSlide")
+          logger.info { "Added choice ${it.key}} = $newSlide" }
         }
       }
 
@@ -46,7 +48,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
       error("""Slide "$title" has duplicate choice titles""")
   }
 
-  override fun toString(): String {
-    return "Slide(title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
-  }
+  override fun toString() = "Slide(title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
+
+  companion object : KLogging()
 }

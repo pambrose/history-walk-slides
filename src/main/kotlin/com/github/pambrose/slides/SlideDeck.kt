@@ -58,10 +58,12 @@ class SlideDeck {
       SlideDeck()
         .apply(block)
         .apply {
-          slideList.forEach { slide ->
-            slideMap[slide.pathName] = slide   // Built after all slides are added to get pathName right
-            slide.validateSlide()
-          }
+          slideList
+            .filterNot { it.isSubTree }
+            .forEach { slide ->
+              slideMap[slide.pathName] = slide   // Built after all slides are added to get pathName right
+              slide.validateSlide()
+            }
           validateSlideDeck()
         }
   }
