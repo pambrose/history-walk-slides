@@ -14,7 +14,7 @@ class SlideDeck {
     success: Boolean = false,
     block: Slide.() -> Unit = { }
   ) =
-    Slide(title, content, root, success).apply {
+    Slide(title, content, root, success, this).apply {
       block()
     }.also { slide ->
       addSlideToDeck(slide)
@@ -49,7 +49,7 @@ class SlideDeck {
 
   fun containsSlide(pathName: String) = slideMap.containsKey(pathName)
 
-  private fun addSlideToDeck(slide: Slide) {
+  fun addSlideToDeck(slide: Slide) {
     slideList += slide
   }
 
@@ -69,4 +69,3 @@ class SlideDeck {
         }
   }
 }
-
