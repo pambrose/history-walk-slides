@@ -23,7 +23,7 @@ class SlideDeck {
   private fun validateSlideDeck() {
     slideList.forEach { slide ->
       if (slide.success && slide.hasChoices)
-        error("""Slide "${slide.fqName}" cannot be a success slide and have choices""")
+        error("""Slide "${slide.pathName}" cannot be a success slide and have choices""")
     }
 
     slideList.filter { it.success }.count()
@@ -36,18 +36,18 @@ class SlideDeck {
       }
 
     rootSlide =
-      slideList.filter { it.parentSlide == null }.let { nullParents ->
+      slideList.filter { it.root }.let { rootSlides ->
         when {
-          nullParents.size > 1 -> error("Multiple top-level slides: ${nullParents.map { it.fqName }}")
-          nullParents.isEmpty() -> error("Missing a top-level slide")
-          else -> nullParents.first()
+          rootSlides.isEmpty() -> error("Missing a top-level slide")
+          rootSlides.size > 1 -> error("Multiple top-level slides: ${rootSlides.map { it.title }}")
+          else -> rootSlides.first()
         }
       }
   }
 
-  fun findSlide(fqName: String) = slideMap[fqName]
+  fun findSlide(pathName: String) = slideMap[pathName]
 
-  fun containsSlide(fqName: String) = slideMap.containsKey(fqName)
+  fun containsSlide(pathName: String) = slideMap.containsKey(pathName)
 
   private fun addSlideToDeck(slide: Slide) {
     slideList += slide
@@ -59,7 +59,7 @@ class SlideDeck {
         .apply(block)
         .apply {
           slideList.forEach { slide ->
-            slideMap[slide.fqName] = slide   // Built after all slides are added to get fqname right
+            slideMap[slide.pathName] = slide   // Built after all slides are added to get pathName right
             slide.validateSlide()
           }
           validateSlideDeck()

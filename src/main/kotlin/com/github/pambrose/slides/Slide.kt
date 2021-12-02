@@ -5,7 +5,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   val choices = mutableMapOf<String, Slide>()
 
   // These are assigned when the slideMap is built from the slideList
-  lateinit var fqName: String
+  lateinit var pathName: String
   var parentSlide: Slide? = null
 
   val hasChoices get() = choices.isNotEmpty()
@@ -15,8 +15,8 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   init {
     require(title.isNotEmpty()) { "Slide title cannot be empty" }
 
-//    if (root)
-//      fqName = "/$title"  // Assign this for root slide. Re-assigned for others
+    if (root)
+      pathName = "/$title"
   }
 
   fun copyOf(): Slide {
@@ -40,11 +40,11 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   fun choice(text: String, slide: Slide) {
     choices[text] = slide
     slide.parentSlide = this
-    slide.assignFQName()
+    slide.assignPathName()
   }
 
-  fun assignFQName() {
-    fqName = "${parentSlide?.fqName ?: ""}/$title"
+  fun assignPathName() {
+    pathName = "${parentSlide?.pathName ?: ""}/$title"
   }
 
   fun validateSlide() {
