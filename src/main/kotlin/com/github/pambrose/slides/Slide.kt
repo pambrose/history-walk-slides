@@ -23,7 +23,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
     Slide(title, content, root, success)
       .also { copy ->
         copy.verticalChoices = verticalChoices
-        choices.forEach {
+        this@Slide.choices.forEach {
           val newSlide = it.value.copyOf().also { it.parentSlide = copy }
           copy.choices[it.key] = newSlide
           logger.info { "Added choice ${it.key}} = $newSlide" }
