@@ -17,15 +17,16 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
     require(title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
-  fun copyOf(): Slide {
-    return Slide(title, content, root, success)
+  fun copyOf(): Slide =
+    Slide(title, content, root, success)
       .also { copy ->
         copy.verticalChoices = verticalChoices
         choices.forEach {
-          copy.choices[it.key] = it.value.copyOf().also { it.parentSlide = copy }
+          val newSlide = it.value.copyOf().also { it.parentSlide = copy }
+          copy.choices[it.key] = newSlide
+          println("Added choice ${it.key}} = $newSlide")
         }
       }
-  }
 
   fun verticalChoices() {
     verticalChoices = true
@@ -43,5 +44,9 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   fun validateSlide() {
     if (choices.map { it.key }.toSet().size != choices.size)
       error("""Slide "$title" has duplicate choice titles""")
+  }
+
+  override fun toString(): String {
+    return "Slide(title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
   }
 }
