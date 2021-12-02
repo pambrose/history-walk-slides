@@ -28,6 +28,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
       copy.choices[text] = newChoice
       logger.info { "Added choice $text} = $newChoice" }
     }
+    return copy
   }
 
   fun verticalChoices() {
