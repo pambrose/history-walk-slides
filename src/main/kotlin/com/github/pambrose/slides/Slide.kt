@@ -9,13 +9,14 @@ class Slide(
   var content = mutableListOf<String>()
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
-  val fqName: String = "${parentSlide?.fqName ?: ""}/$title"
+
+  val fqName: String
+    get() = "${parentSlide?.fqName ?: ""}/$title"
 
   val hasChoices: Boolean
     get() = choices.isNotEmpty()
 
   init {
-    require(!slideDeck.containsSlide(fqName)) { "Slide titles must be unique: $fqName" }
     slideDeck.assignSlide(this)
   }
 
@@ -34,5 +35,10 @@ class Slide(
   fun choice(text: String, slide: Slide) {
     choices[text] = slide
     slide.parentSlide = this
+  }
+
+  fun validateSlide() {
+    if (choices.map { it.value.title }.toSet().size != choices.size)
+      error("Duplicate choice titles")
   }
 }

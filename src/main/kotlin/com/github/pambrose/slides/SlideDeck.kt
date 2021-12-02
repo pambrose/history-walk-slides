@@ -19,25 +19,22 @@ class SlideDeck {
     }.apply {
       if (content.isEmpty())
         body("Default Text")
+      validateSlide()
     }
 
-  fun validate() {
+  fun validateSlideDeck() {
     allSlides.forEach { (_, slide) ->
-//      slide.choices.forEach { (_, choiceTitle) ->
-//        val choiceSlide = allSlides[choiceTitle] ?: error("Missing slide with title: $choiceTitle")
-//      }
-
       if (slide.success && slide.hasChoices)
         error("""Slide "${slide.fqName}" has both success and choices""")
     }
 
     allSlides.filter { it.value.success }.count()
       .also { successCount ->
-        if (successCount == 0)
-          error("No success slide found")
-
-        if (successCount > 1)
-          error("Multiple success slides found")
+        when (successCount) {
+          0 -> error("No success slide found")
+          1 -> logger.debug("Success slide found")
+          else -> error("Multiple success slides found")
+        }
       }
 
     rootSlide =
