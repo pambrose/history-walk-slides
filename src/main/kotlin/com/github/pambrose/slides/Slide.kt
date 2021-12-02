@@ -22,9 +22,10 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   fun copyOf(): Slide {
     val copy = Slide(title, content, root, success, slideDeck)
     copy.verticalChoices = this.verticalChoices
+    slideDeck.addSlideToDeck(copy)
     choices.forEach { text, slide ->
       val newChoice = slide.copyOf().also { it.parentSlide = copy }
-      this@Slide.slideDeck.addSlideToDeck(newChoice)
+      //this@Slide.slideDeck.addSlideToDeck(newChoice)
       copy.choices[text] = newChoice
       logger.info { "Added choice $text} = $newChoice" }
     }
