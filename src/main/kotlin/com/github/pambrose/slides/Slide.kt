@@ -9,9 +9,7 @@ class Slide(
   var parentSlide: Slide? = null
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
-
-  val fqName: String
-    get() = "${parentSlide?.fqName ?: ""}/$title"
+  var fqName: String = "/$title"  // Assign this for root slide
 
   val hasChoices: Boolean
     get() = choices.isNotEmpty()
@@ -27,6 +25,11 @@ class Slide(
   fun choice(text: String, slide: Slide) {
     choices[text] = slide
     slide.parentSlide = this
+    slide.assignFQName()
+  }
+
+  fun assignFQName() {
+    fqName = "${parentSlide?.fqName ?: ""}/$title"
   }
 
   fun validateSlide() {
