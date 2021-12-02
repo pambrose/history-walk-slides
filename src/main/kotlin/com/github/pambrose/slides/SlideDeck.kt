@@ -3,7 +3,8 @@ package com.github.pambrose.slides
 import mu.KLogging
 
 class SlideDeck {
-  private val allSlides = mutableMapOf<String, Slide>()
+  private val slideList = mutableListOf<Slide>()
+  private val slideMap = mutableMapOf<String, Slide>()
   lateinit var rootSlide: Slide
 
   fun slide(
@@ -14,18 +15,17 @@ class SlideDeck {
   ) =
     Slide(title, content, success, this).apply {
       block()
-    }.apply {
-      validateSlide()
-      slideDeck.assignSlide(this)
+    }.also { slide ->
+      addSlideToDeck(slide)
     }
 
-  fun validateSlideDeck() {
-    allSlides.forEach { (_, slide) ->
+  private fun validateSlideDeck() {
+    slideList.forEach { slide ->
       if (slide.success && slide.hasChoices)
         error("""Slide "${slide.fqName}" cannot be a success slide and have choices""")
     }
 
-    allSlides.filter { it.value.success }.count()
+    slideList.filter { it.success }.count()
       .also { successCount ->
         when (successCount) {
           0 -> error("No success slide found")
@@ -35,7 +35,7 @@ class SlideDeck {
       }
 
     rootSlide =
-      allSlides.values.filter { it.parentSlide == null }.let { nullParents ->
+      slideList.filter { it.parentSlide == null }.let { nullParents ->
         when {
           nullParents.size > 1 -> error("Multiple top-level slides: ${nullParents.map { it.fqName }}")
           nullParents.isEmpty() -> error("Missing a top-level slide")
@@ -44,17 +44,25 @@ class SlideDeck {
       }
   }
 
-  fun findSlide(fqName: String) = allSlides[fqName]
+  fun findSlide(fqName: String) = slideMap[fqName]
 
-  fun containsSlide(fqName: String) = allSlides.containsKey(fqName)
+  fun containsSlide(fqName: String) = slideMap.containsKey(fqName)
 
-  fun assignSlide(slide: Slide) {
-    allSlides[slide.fqName] = slide
+  private fun addSlideToDeck(slide: Slide) {
+    slideList += slide
   }
 
   companion object : KLogging() {
     fun slideDeck(block: SlideDeck.() -> Unit) =
-      SlideDeck().apply(block).apply { }
+      SlideDeck()
+        .apply(block)
+        .apply {
+          slideList.forEach { slide ->
+            slideMap[slide.fqName] = slide   // Built after all slides are added to get fqname right
+            slide.validateSlide()
+          }
+          validateSlideDeck()
+        }
   }
 }
 
