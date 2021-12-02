@@ -2,11 +2,11 @@ package com.github.pambrose.slides
 
 class Slide(
   val title: String,
+  val content: String,
   val success: Boolean,
-  slideDeck: SlideDeck
+  val slideDeck: SlideDeck
 ) {
   var parentSlide: Slide? = null
-  var content = mutableListOf<String>()
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
 
@@ -15,14 +15,6 @@ class Slide(
 
   val hasChoices: Boolean
     get() = choices.isNotEmpty()
-
-  init {
-    slideDeck.assignSlide(this)
-  }
-
-  fun body(text: String) {
-    content += text
-  }
 
   fun verticalChoices() {
     verticalChoices = true

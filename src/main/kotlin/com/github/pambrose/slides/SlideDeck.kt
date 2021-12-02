@@ -8,24 +8,21 @@ class SlideDeck {
 
   fun slide(
     title: String,
-    content: String = "",
+    content: String = "Default Text",
     success: Boolean = false,
     block: Slide.() -> Unit = { }
   ) =
-    Slide(title, success, this).apply {
-      if (content.isNotEmpty())
-        body(content)
+    Slide(title, content, success, this).apply {
       block()
     }.apply {
-      if (content.isEmpty())
-        body("Default Text")
       validateSlide()
+      slideDeck.assignSlide(this)
     }
 
   fun validateSlideDeck() {
     allSlides.forEach { (_, slide) ->
       if (slide.success && slide.hasChoices)
-        error("""Slide "${slide.fqName}" has both success and choices""")
+        error("""Slide "${slide.fqName}" cannot be a success slide and have choices""")
     }
 
     allSlides.filter { it.value.success }.count()
