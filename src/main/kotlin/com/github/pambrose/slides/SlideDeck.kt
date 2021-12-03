@@ -9,7 +9,7 @@ class SlideDeck {
 
   fun slide(
     title: String,
-    content: String = "Default Text",
+    content: String,
     root: Boolean = false,
     success: Boolean = false,
     block: Slide.() -> Unit = { }
