@@ -48,7 +48,19 @@ class SlideDeck {
       }
   }
 
-  fun findSlide(pathName: String) = slideMap[pathName]
+  fun findSlide(pathName: String): Slide {
+    val slide = if (pathName == ROOT)
+      rootSlide
+    else
+      slideMap[pathName]
+
+    return if (slide == null) {
+      logger.error("Invalid slide name: $pathName")
+      rootSlide
+    } else {
+      slide
+    }
+  }
 
   fun containsSlide(pathName: String) = slideMap.containsKey(pathName)
 
@@ -57,6 +69,8 @@ class SlideDeck {
   }
 
   companion object : KLogging() {
+    const val ROOT = "/"
+
     fun slideDeck(block: SlideDeck.() -> Unit) =
       SlideDeck()
         .apply(block)
