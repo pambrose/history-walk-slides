@@ -20,6 +20,9 @@ class SlideDeck {
       addSlideToDeck(slide)
     }
 
+  fun relativeSlide(relative: Int) =
+    Slide("", "", false, false, this).also { slide -> slide.relative = relative }
+
   private fun validateSlideDeck() {
     slideList.forEach { slide ->
       if (slide.success && slide.hasChoices)

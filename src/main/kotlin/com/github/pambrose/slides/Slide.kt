@@ -2,7 +2,14 @@ package com.github.pambrose.slides
 
 import mu.KLogging
 
-class Slide(val title: String, val content: String, val root: Boolean, val success: Boolean, val slideDeck: SlideDeck) {
+class Slide(
+  val title: String,
+  val content: String,
+  val root: Boolean = false,
+  val success: Boolean = false,
+  val slideDeck: SlideDeck
+) {
+  var relative: Int = 0
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
 
@@ -16,7 +23,7 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   val pathName: String get() = "${parentSlide?.pathName ?: ""}/$title"
 
   init {
-    require(title.isNotEmpty()) { "Slide title cannot be empty" }
+    require(relative == 0 && title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
   fun copyOf(): Slide =
