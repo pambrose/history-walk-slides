@@ -35,7 +35,6 @@ class Slide(val title: String, val content: String, val root: Boolean, val succe
   }
 
   fun choice(text: String, slide: Slide) {
-    require(text.isNotEmpty()) { "Choice text cannot be empty for ${slide.title}" }
     choices[text] = slide
     slide.parentSlide = this
   }
