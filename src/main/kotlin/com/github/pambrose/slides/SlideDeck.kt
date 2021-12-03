@@ -31,7 +31,7 @@ class SlideDeck {
         when (successCount) {
           0 -> error("No success slide found")
           1 -> logger.debug("Success slide found")
-          else -> error("Multiple success slides found")
+          else -> logger.warn { "$successCount success slides found" }
         }
       }
 
