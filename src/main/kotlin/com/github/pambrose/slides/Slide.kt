@@ -61,7 +61,7 @@ class Slide(
       error("""Slide "$title" has duplicate choice slide titles""")
   }
 
-  override fun toString() = "Slide(title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
+  override fun toString() = "Slide(id='$id', title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
 
   companion object : KLogging()
 }

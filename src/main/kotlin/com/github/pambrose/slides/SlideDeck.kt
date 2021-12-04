@@ -66,7 +66,7 @@ class SlideDeck {
     }
   }
 
-  fun findSlideById(id: String): Slide? = slideList.find { it.id == id }
+  fun findSlideById(id: String, version: Int = 0) = slideIdMap[id]?.get(version)
 
   fun containsSlideByPathName(pathName: String) = slideMap.containsKey(pathName)
 
