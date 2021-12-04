@@ -5,6 +5,7 @@ import mu.KLogging
 class SlideDeck {
   private val slideList = mutableListOf<Slide>()
   private val slideMap = mutableMapOf<String, Slide>()
+  val slideIdMap = mutableMapOf<String, Int>()
   lateinit var rootSlide: Slide
 
   fun slide(
