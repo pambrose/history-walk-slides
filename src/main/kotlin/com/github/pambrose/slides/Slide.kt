@@ -7,9 +7,9 @@ class Slide(
   val content: String,
   val root: Boolean = false,
   val success: Boolean = false,
-  val slideDeck: SlideDeck
+  val slideDeck: SlideDeck,
+  val relative: Int = 0
 ) {
-  var relative: Int = 0
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
 

@@ -20,8 +20,7 @@ class SlideDeck {
       addSlideToDeck(slide)
     }
 
-  fun relativeSlide(relative: Int) =
-    Slide("", "", false, false, this).also { slide -> slide.relative = relative }
+  fun goBack(relative: Int) = Slide("", "", false, false, this, relative)
 
   private fun validateSlideDeck() {
     slideList.forEach { slide ->
