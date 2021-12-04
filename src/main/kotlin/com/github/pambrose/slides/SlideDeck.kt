@@ -20,7 +20,10 @@ class SlideDeck {
       addSlideToDeck(slide)
     }
 
-  fun goBack(relative: Int) = Slide("", "", false, false, this, relative)
+  fun goBack(relative: Int): Slide {
+    require(relative != 0) { "Offset cannot be 0" }
+    return Slide("", "", false, false, this, relative)
+  }
 
   private fun validateSlideDeck() {
     slideList.forEach { slide ->

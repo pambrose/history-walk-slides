@@ -23,7 +23,8 @@ class Slide(
   val pathName: String get() = "${parentSlide?.pathName ?: ""}/$title"
 
   init {
-    require(relative == 0 && title.isNotEmpty()) { "Slide title cannot be empty" }
+    if (relative == 0)
+      require(title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
   fun copyOf(): Slide =
