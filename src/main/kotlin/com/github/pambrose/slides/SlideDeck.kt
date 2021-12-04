@@ -20,9 +20,9 @@ class SlideDeck {
       addSlideToDeck(slide)
     }
 
-  fun goBack(relative: Int): Slide {
-    require(relative != 0) { "Offset cannot be 0" }
-    return Slide("", "", false, false, this, relative)
+  fun goBack(offset: Int): Slide {
+    require(offset != 0) { "Offset cannot be 0" }
+    return Slide("", "", false, false, this, offset)
   }
 
   private fun validateSlideDeck() {

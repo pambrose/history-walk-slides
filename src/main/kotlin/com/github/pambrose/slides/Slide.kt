@@ -8,7 +8,7 @@ class Slide(
   val root: Boolean = false,
   val success: Boolean = false,
   val slideDeck: SlideDeck,
-  val relative: Int = 0
+  val offset: Int = 0
 ) {
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
@@ -23,12 +23,12 @@ class Slide(
   val pathName: String get() = "${parentSlide?.pathName ?: ""}/$title"
 
   init {
-    if (relative == 0)
+    if (offset == 0)
       require(title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
   fun copyOf(): Slide =
-    Slide(title, content, root, success, slideDeck, relative).also { copy ->
+    Slide(title, content, root, success, slideDeck, offset).also { copy ->
       copy.verticalChoices = verticalChoices
       choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
       slideDeck.addSlideToDeck(copy)
