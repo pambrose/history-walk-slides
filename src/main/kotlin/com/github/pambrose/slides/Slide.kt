@@ -28,7 +28,7 @@ class Slide(
   }
 
   fun copyOf(): Slide =
-    Slide(title, content, root, success, slideDeck).also { copy ->
+    Slide(title, content, root, success, slideDeck, relative).also { copy ->
       copy.verticalChoices = verticalChoices
       choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
       slideDeck.addSlideToDeck(copy)
