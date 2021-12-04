@@ -51,7 +51,7 @@ class SlideDeck {
       }
   }
 
-  fun findSlide(pathName: String): Slide {
+  fun findSlideByPathName(pathName: String): Slide {
     val slide = if (pathName == ROOT)
       rootSlide
     else
@@ -65,7 +65,9 @@ class SlideDeck {
     }
   }
 
-  fun containsSlide(pathName: String) = slideMap.containsKey(pathName)
+  fun findSlideById(id: String): Slide? = slideList.find { it.id == id }
+
+  fun containsSlideByPathName(pathName: String) = slideMap.containsKey(pathName)
 
   fun addSlideToDeck(slide: Slide) {
     slideList += slide
