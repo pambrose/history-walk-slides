@@ -28,13 +28,16 @@ class Slide(
       require(title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
-  fun copyOf(copyId: String): Slide =
-    Slide("$id-$copyId", title, content, root, success, slideDeck, offset)
+  fun copyOf(): Slide {
+    val count = slideIdMap[id] ?: 0
+    slideIdMap[id] = count + 1
+    return Slide("$id-${slideIdMap[id]}", title, content, root, success, slideDeck, offset)
       .also { copy ->
         copy.verticalChoices = verticalChoices
-        choices.forEach { text, slide -> copy.choices[text] = slide.copyOf(copyId).also { it.parentSlide = copy } }
+        choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
         slideDeck.addSlideToDeck(copy)
       }
+  }
 
   fun verticalChoices() {
     verticalChoices = true
@@ -60,5 +63,7 @@ class Slide(
 
   override fun toString() = "Slide(title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
 
-  companion object : KLogging()
+  companion object : KLogging() {
+    val slideIdMap = mutableMapOf<String, Int>()
+  }
 }
