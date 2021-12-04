@@ -5,7 +5,7 @@ import mu.KLogging
 class SlideDeck {
   private val slideList = mutableListOf<Slide>()
   private val slideMap = mutableMapOf<String, Slide>()
-  val slideIdMap = mutableMapOf<String, Int>()
+  val slideIdMap = mutableMapOf<String, MutableList<Slide>>()
   lateinit var rootSlide: Slide
 
   fun slide(
@@ -84,7 +84,7 @@ class SlideDeck {
           slideList
             .filterNot { it.isSubTree }
             .forEach { slide ->
-              logger.debug { "Added to map '${slide.pathName}' Slide: ${slide.title}" }
+              logger.info { "Added to map Title: ${slide.title} Path: '${slide.pathName}'" }
               slideMap[slide.pathName] = slide   // Built after all slides are added to get pathName right
               slide.validateSlide()
             }

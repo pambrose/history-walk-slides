@@ -19,7 +19,7 @@ class Slide(
 
   val hasChoices get() = choices.isNotEmpty()
 
-  val isSubTree get() = !root && parentSlide == null
+  val isSubTree: Boolean get() = parentSlide?.isSubTree ?: !root
 
   val pathName: String get() = "${parentSlide?.pathName ?: ""}/$title"
 
@@ -29,9 +29,9 @@ class Slide(
   }
 
   fun copyOf(): Slide {
-    val count = slideDeck.slideIdMap[id] ?: 0
-    slideDeck.slideIdMap[id] = count + 1
-    return Slide("$id-${slideDeck.slideIdMap[id]}", title, content, root, success, slideDeck, offset)
+    // Each version of the slide is kept in a list
+    (slideDeck.slideIdMap.computeIfAbsent(id) { mutableListOf() }) += this
+    return Slide(id, title, content, root, success, slideDeck, offset)
       .also { copy ->
         copy.verticalChoices = verticalChoices
         choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
