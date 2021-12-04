@@ -3,6 +3,7 @@ package com.github.pambrose.slides
 import mu.KLogging
 
 class Slide(
+  val id: String,
   val title: String,
   val content: String,
   val root: Boolean = false,
@@ -27,12 +28,13 @@ class Slide(
       require(title.isNotEmpty()) { "Slide title cannot be empty" }
   }
 
-  fun copyOf(): Slide =
-    Slide(title, content, root, success, slideDeck, offset).also { copy ->
-      copy.verticalChoices = verticalChoices
-      choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
-      slideDeck.addSlideToDeck(copy)
-    }
+  fun copyOf(copyId: String): Slide =
+    Slide("$id-$copyId", title, content, root, success, slideDeck, offset)
+      .also { copy ->
+        copy.verticalChoices = verticalChoices
+        choices.forEach { text, slide -> copy.choices[text] = slide.copyOf(copyId).also { it.parentSlide = copy } }
+        slideDeck.addSlideToDeck(copy)
+      }
 
   fun verticalChoices() {
     verticalChoices = true

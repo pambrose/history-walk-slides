@@ -8,13 +8,14 @@ class SlideDeck {
   lateinit var rootSlide: Slide
 
   fun slide(
+    id: String,
     title: String,
     content: String,
     root: Boolean = false,
     success: Boolean = false,
     block: Slide.() -> Unit = { }
   ) =
-    Slide(title, content, root, success, this).apply {
+    Slide(id, title, content, root, success, this).apply {
       block()
     }.also { slide ->
       addSlideToDeck(slide)
@@ -22,7 +23,7 @@ class SlideDeck {
 
   fun goBack(offset: Int): Slide {
     require(offset != 0) { "Offset cannot be 0" }
-    return Slide("", "", false, false, this, offset)
+    return Slide("-1", "", "", false, false, this, offset)
   }
 
   private fun validateSlideDeck() {
