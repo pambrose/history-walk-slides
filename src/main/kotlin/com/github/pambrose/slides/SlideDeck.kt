@@ -66,7 +66,12 @@ class SlideDeck {
     }
   }
 
-  fun findSlideById(id: String, version: Int = 0) = slideIdMap[id]?.get(version)
+  fun findSlideById(id: String, version: Int = 0) = slideIdMap[id]?.let {
+    if (version < it.size)
+      it[version]
+    else
+      null
+  }
 
   fun containsSlideByPathName(pathName: String) = slideMap.containsKey(pathName)
 
