@@ -74,6 +74,11 @@ class SlideDeck {
     slideList += slide
   }
 
+  // Each instance of the slide is kept in a list
+  fun addSlideToIdMap(slide: Slide) {
+    slideIdMap.computeIfAbsent(slide.id) { mutableListOf() } += slide
+  }
+
   companion object : KLogging() {
     const val ROOT = "/"
 
@@ -88,6 +93,9 @@ class SlideDeck {
               slideMap[slide.pathName] = slide   // Built after all slides are added to get pathName right
               slide.validateSlide()
             }
+
+          // Remove slides that are no in main tree
+          slideIdMap.values.forEach { slideList -> slideList.removeIf { it.isSubTree } }
           validateSlideDeck()
         }
   }

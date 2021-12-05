@@ -26,11 +26,11 @@ class Slide(
   init {
     if (offset == 0)
       require(title.isNotEmpty()) { "Slide title cannot be empty" }
+
+    slideDeck.addSlideToIdMap(this)
   }
 
   fun copyOf(): Slide {
-    // Each version of the slide is kept in a list
-    (slideDeck.slideIdMap.computeIfAbsent(id) { mutableListOf() }) += this
     return Slide(id, title, content, root, success, slideDeck, offset)
       .also { copy ->
         copy.verticalChoices = verticalChoices
