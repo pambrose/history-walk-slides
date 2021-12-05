@@ -5,11 +5,11 @@ import mu.KLogging
 class SlideDeck {
   private val slideList = mutableListOf<Slide>()
   private val slideMap = mutableMapOf<String, Slide>()
-  val slideIdMap = mutableMapOf<String, MutableList<Slide>>()
+  val slideIdMap = mutableMapOf<Int, MutableList<Slide>>()
   lateinit var rootSlide: Slide
 
   fun slide(
-    id: String,
+    id: Int,
     title: String,
     content: String,
     root: Boolean = false,
@@ -24,7 +24,7 @@ class SlideDeck {
 
   fun goBack(offset: Int): Slide {
     require(offset != 0) { "Offset cannot be 0" }
-    return Slide("-1", "", "", false, false, this, offset)
+    return Slide(-1, "", "", false, false, this, offset)
   }
 
   private fun validateSlideDeck() {
@@ -66,12 +66,10 @@ class SlideDeck {
     }
   }
 
-  fun findSlideById(id: String, version: Int = 0) = slideIdMap[id]?.let {
-    if (version < it.size)
-      it[version]
-    else
-      null
-  }
+  fun findSlideById(id: Int, version: Int = 0) =
+    slideIdMap[id]?.let {
+      if (version < it.size) it[version] else null
+    }
 
   fun containsSlideByPathName(pathName: String) = slideMap.containsKey(pathName)
 
@@ -101,7 +99,12 @@ class SlideDeck {
 
           // Remove slides that are no in main tree
           slideIdMap.values.forEach { slideList -> slideList.removeIf { it.isSubTree } }
+
+          // Validate it
           validateSlideDeck()
+
+          // Empty slideList
+          slideList.clear()
         }
   }
 }

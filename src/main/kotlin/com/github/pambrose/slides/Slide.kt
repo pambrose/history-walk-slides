@@ -3,7 +3,7 @@ package com.github.pambrose.slides
 import mu.KLogging
 
 class Slide(
-  val id: String,
+  val id: Int,
   val title: String,
   val content: String,
   val root: Boolean = false,
