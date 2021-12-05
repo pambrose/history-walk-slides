@@ -92,7 +92,7 @@ class SlideDeck {
           slideList
             .filterNot { it.isSubTree }
             .forEach { slide ->
-              logger.info { "Added to map Title: ${slide.title} Path: '${slide.pathName}'" }
+              logger.debug { "Added to map Title: ${slide.title} Path: '${slide.pathName}'" }
               slideMap[slide.pathName] = slide   // Built after all slides are added to get pathName right
               slide.validateSlide()
             }
