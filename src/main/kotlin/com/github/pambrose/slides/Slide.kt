@@ -30,14 +30,13 @@ class Slide(
     slideDeck.addSlideToIdMap(this)
   }
 
-  fun copyOf(): Slide {
-    return Slide(id, title, content, root, success, slideDeck, offset)
+  fun copyOf(): Slide =
+    Slide(id, title, content, root, success, slideDeck, offset)
       .also { copy ->
         copy.verticalChoices = verticalChoices
-        choices.forEach { text, slide -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
+        choices.forEach { (text, slide) -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
         slideDeck.addSlideToDeck(copy)
       }
-  }
 
   fun verticalChoices() {
     verticalChoices = true

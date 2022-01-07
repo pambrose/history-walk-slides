@@ -33,7 +33,7 @@ class SlideDeck {
         error("""Slide "${slide.pathName}" cannot be a success slide and have choices""")
     }
 
-    slideList.filter { it.success }.count()
+    slideList.count { it.success }
       .also { successCount ->
         when (successCount) {
           0 -> error("No success slide found")
