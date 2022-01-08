@@ -9,7 +9,8 @@ class Slide(
   val root: Boolean = false,
   val success: Boolean = false,
   val slideDeck: SlideDeck,
-  val offset: Int = 0
+  val offset: Int = 0,
+  val displayTitle: Boolean = true,
 ) {
   var verticalChoices = true
   val choices = mutableMapOf<String, Slide>()
@@ -30,8 +31,8 @@ class Slide(
     slideDeck.addSlideToIdMap(this)
   }
 
-  fun copyOf(): Slide =
-    Slide(id, title, content, root, success, slideDeck, offset)
+  fun copyOf(title: String = this.title, displayTitle: Boolean = this.displayTitle): Slide =
+    Slide(id, title, content, root, success, slideDeck, offset, displayTitle)
       .also { copy ->
         copy.verticalChoices = verticalChoices
         choices.forEach { (text, slide) -> copy.choices[text] = slide.copyOf().also { it.parentSlide = copy } }
@@ -62,7 +63,7 @@ class Slide(
       }
 
     // Ignore children that are dead ends, e.g., "Incorrect Choice" slide
-    choices.filter { it.value.hasChoices }.map { it.value.title }.dups()
+    choices.map { it.value.title }.dups()
       .also { dups ->
         if (dups.size > 0)
           error("""Slide "$title" has duplicate choice slide titles: $dups""")
