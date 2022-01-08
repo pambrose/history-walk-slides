@@ -53,11 +53,19 @@ class Slide(
   }
 
   fun validateSlide() {
-    if (choices.map { it.key }.toSet().size != choices.size)
-      error("""Slide "$title" has duplicate choice titles""")
+    fun <T> Collection<T>.dups() = groupingBy { it }.eachCount().filter { it.value > 1 }.map { it.key }
 
-    if (choices.map { it.value.title }.toSet().size != choices.size)
-      error("""Slide "$title" has duplicate choice slide titles""")
+    choices.map { it.key }.dups()
+      .also { dups ->
+        if (dups.size > 0)
+          error("""Slide "$title" has duplicate choice titles: $dups""")
+      }
+
+    choices.map { it.value.title }.dups()
+      .also { dups ->
+        if (dups.size > 0)
+          error("""Slide "$title" has duplicate choice slide titles: $dups""")
+      }
   }
 
   override fun toString() = "Slide(id='$id', title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
