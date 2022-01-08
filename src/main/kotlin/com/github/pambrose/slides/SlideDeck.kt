@@ -14,9 +14,10 @@ class SlideDeck {
     content: String,
     root: Boolean = false,
     success: Boolean = false,
+    displayTitle: Boolean = true,
     block: Slide.() -> Unit = { }
   ) =
-    Slide(id, title, content, root, success, this).apply {
+    Slide(id, title, content, root, success, this, displayTitle = displayTitle).apply {
       block()
     }.also { slide ->
       addSlideToDeck(slide)
