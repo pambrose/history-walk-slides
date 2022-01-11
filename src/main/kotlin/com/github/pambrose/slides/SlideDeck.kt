@@ -47,15 +47,13 @@ class SlideDeck {
         }
 
     successSlide =
-      slideList
-        .filter { it.success }
-        .let { successSlides ->
-          when {
-            successSlides.isEmpty() -> error("Missing a success slide")
-            successSlides.size > 1 -> error("Multiple success slides: ${successSlides.map { it.title }}")
-            else -> successSlides.first()
-          }
+      slideList.filter { it.success }.let { successSlides ->
+        when {
+          successSlides.isEmpty() -> error("Missing a success slide")
+          successSlides.size > 1 -> logger.warn { "${successSlides.count()} success slides: ${successSlides.map { it.title }}" }
         }
+        successSlides.first()
+      }
   }
 
   fun findSlideByPathName(pathName: String): Slide {
