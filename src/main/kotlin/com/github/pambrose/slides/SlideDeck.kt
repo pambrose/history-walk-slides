@@ -7,6 +7,7 @@ class SlideDeck {
   private val slideMap = mutableMapOf<String, Slide>()
   val slideIdMap = mutableMapOf<Int, MutableList<Slide>>()
   lateinit var rootSlide: Slide
+  lateinit var successSlide: Slide
 
   fun slide(
     id: Int,
@@ -34,23 +35,27 @@ class SlideDeck {
         error("""Slide "${slide.pathName}" cannot be a success slide and have choices""")
     }
 
-    slideList.count { it.success }
-      .also { successCount ->
-        when (successCount) {
-          0 -> error("No success slide found")
-          1 -> logger.debug("Success slide found")
-          else -> logger.warn { "$successCount success slides found" }
-        }
-      }
-
     rootSlide =
-      slideList.filter { it.root }.let { rootSlides ->
-        when {
-          rootSlides.isEmpty() -> error("Missing a top-level slide")
-          rootSlides.size > 1 -> error("Multiple top-level slides: ${rootSlides.map { it.title }}")
-          else -> rootSlides.first()
+      slideList
+        .filter { it.root }
+        .let { rootSlides ->
+          when {
+            rootSlides.isEmpty() -> error("Missing a top-level slide")
+            rootSlides.size > 1 -> error("Multiple top-level slides: ${rootSlides.map { it.title }}")
+            else -> rootSlides.first()
+          }
         }
-      }
+
+    successSlide =
+      slideList
+        .filter { it.success }
+        .let { successSlides ->
+          when {
+            successSlides.isEmpty() -> error("Missing a success slide")
+            successSlides.size > 1 -> error("Multiple success slides: ${successSlides.map { it.title }}")
+            else -> successSlides.first()
+          }
+        }
   }
 
   fun findSlideByPathName(pathName: String): Slide {
