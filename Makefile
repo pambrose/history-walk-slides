@@ -13,4 +13,4 @@ depends:
 	./gradlew dependencies
 
 upgrade-wrapper:
-	./gradlew wrapper --gradle-version=7.5-rc-2 --distribution-type=bin
+	./gradlew wrapper --gradle-version=7.5-rc-4 --distribution-type=bin
