@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
-    id "com.github.ben-manes.versions" version '0.42.0'
+    id "com.github.ben-manes.versions" version '0.44.0'
 }
 
 sourceCompatibility = 1.8
@@ -10,7 +10,7 @@ targetCompatibility = 1.8
 
 description 'history-walk-slides'
 group 'com.github.pambrose'
-version '1.6.6'
+version '1.6.7'
 
 repositories {
     google()
@@ -25,6 +25,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '17'
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '17'
 }
 
 publishing {
