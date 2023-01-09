@@ -5,12 +5,12 @@ plugins {
     id "com.github.ben-manes.versions" version '0.44.0'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
 description 'history-walk-slides'
 group 'com.github.pambrose'
-version '1.6.7'
+version '1.6.8'
 
 repositories {
     google()
