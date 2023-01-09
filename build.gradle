@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'org.jetbrains.kotlin.jvm' version '1.7.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
     id "com.github.ben-manes.versions" version '0.42.0'
 }
 
@@ -10,7 +10,7 @@ targetCompatibility = 1.8
 
 description 'history-walk-slides'
 group 'com.github.pambrose'
-version '1.6.5'
+version '1.6.6'
 
 repositories {
     google()
@@ -19,7 +19,6 @@ repositories {
 }
 
 dependencies {
-    //implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "io.github.microutils:kotlin-logging:$logging_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
 }
@@ -28,7 +27,6 @@ test {
     useJUnitPlatform()
 }
 
-// gradle 7
 publishing {
     publications {
         mavenJava(MavenPublication) {
