@@ -58,14 +58,14 @@ class Slide(
 
     choices.map { it.key }.dups()
       .also { dups ->
-        if (dups.size > 0)
+        if (dups.isNotEmpty())
           error("""Slide "$title" has duplicate choice titles: $dups""")
       }
 
     // Ignore children that are dead ends, e.g., "Incorrect Choice" slide
     choices.map { it.value.title }.dups()
       .also { dups ->
-        if (dups.size > 0)
+        if (dups.isNotEmpty())
           error("""Slide "$title" has duplicate choice slide titles: $dups""")
       }
   }
