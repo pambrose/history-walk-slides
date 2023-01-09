@@ -3,6 +3,9 @@ default: versioncheck
 clean:
 	./gradlew clean
 
+build:
+	./gradlew build -xtest
+
 jar: clean
 	./gradlew jar
 
