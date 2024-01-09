@@ -1,6 +1,6 @@
 package com.github.pambrose.slides
 
-import mu.KLogging
+import mu.two.KLogging
 
 class Slide(
   val id: Int,

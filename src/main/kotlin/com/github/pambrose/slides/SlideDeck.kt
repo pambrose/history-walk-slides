@@ -1,6 +1,6 @@
 package com.github.pambrose.slides
 
-import mu.KLogging
+import mu.two.KLogging
 
 class SlideDeck {
   private val slideList = mutableListOf<Slide>()
@@ -16,7 +16,7 @@ class SlideDeck {
     root: Boolean = false,
     success: Boolean = false,
     displayTitle: Boolean = true,
-    block: Slide.() -> Unit = { }
+    block: Slide.() -> Unit = { },
   ) =
     Slide(id, title, content, root, success, this, displayTitle = displayTitle).apply {
       block()
@@ -70,7 +70,10 @@ class SlideDeck {
     }
   }
 
-  fun findSlideById(id: Int, version: Int = 0) =
+  fun findSlideById(
+    id: Int,
+    version: Int = 0,
+  ) =
     slideIdMap[id]?.let {
       if (version < it.size) it[version] else null
     }

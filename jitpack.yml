@@ -4,6 +4,7 @@ install:
   - ./gradlew build -xtest
   - ./gradlew publishToMavenLocal
 
+
 #before_install:
 #  - ./custom_setup.sh
 #install:
