@@ -19,9 +19,7 @@ class Slide(
   var parentSlide: Slide? = null
 
   val hasChoices get() = choices.isNotEmpty()
-
   val isSubTree: Boolean get() = parentSlide?.isSubTree ?: !root
-
   val pathName: String get() = "${parentSlide?.pathName ?: ""}/$title"
 
   init {

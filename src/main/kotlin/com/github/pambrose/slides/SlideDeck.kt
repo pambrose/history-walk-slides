@@ -18,11 +18,9 @@ class SlideDeck {
     displayTitle: Boolean = true,
     block: Slide.() -> Unit = { },
   ) =
-    Slide(id, title, content, root, success, this, displayTitle = displayTitle).apply {
-      block()
-    }.also { slide ->
-      addSlideToDeck(slide)
-    }
+    Slide(id, title, content, root, success, this, displayTitle = displayTitle)
+      .apply { block() }
+      .also { slide -> addSlideToDeck(slide) }
 
   fun goBack(offset: Int): Slide {
     require(offset != 0) { "Offset cannot be 0" }
@@ -47,20 +45,21 @@ class SlideDeck {
         }
 
     successSlide =
-      slideList.filter { it.success }.let { successSlides ->
-        when {
-          successSlides.isEmpty() -> error("Missing a success slide")
-          successSlides.size > 1 -> logger.warn { "${successSlides.count()} success slides: ${successSlides.map { it.title }}" }
+      slideList
+        .filter { it.success }
+        .let { successSlides ->
+          with(successSlides) {
+            when {
+              isEmpty() -> error("Missing a success slide")
+              size > 1 -> logger.warn { "${count()} success slides: ${map { it.title }}" }
+            }
+            first()
+          }
         }
-        successSlides.first()
-      }
   }
 
   fun findSlideByPathName(pathName: String): Slide {
-    val slide = if (pathName == ROOT)
-      rootSlide
-    else
-      slideMap[pathName]
+    val slide = if (pathName == ROOT) rootSlide else slideMap[pathName]
 
     return if (slide == null) {
       logger.error("Invalid slide name: $pathName")
@@ -73,10 +72,7 @@ class SlideDeck {
   fun findSlideById(
     id: Int,
     version: Int = 0,
-  ) =
-    slideIdMap[id]?.let {
-      if (version < it.size) it[version] else null
-    }
+  ): Slide? = slideIdMap[id]?.let { if (version < it.size) it[version] else null }
 
   fun containsSlideByPathName(pathName: String) = slideMap.containsKey(pathName)
 
