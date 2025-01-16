@@ -5,14 +5,9 @@ plugins {
     id "com.github.ben-manes.versions" version '0.51.0'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
 description 'history-walk-slides'
 group 'com.github.pambrose'
-version '1.7.0'
+version '1.8.0'
 
 repositories {
     google()
@@ -29,12 +24,8 @@ test {
     useJUnitPlatform()
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = '17'
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = '17'
+kotlin {
+    jvmToolchain(17)
 }
 
 publishing {
