@@ -5,9 +5,21 @@ plugins {
     id "com.github.ben-manes.versions" version '0.51.0'
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.github.pambrose.history-walk-slides'
+            artifactId = 'history-walk-slides'
+            version = '1.8.2'
+
+            from components.java
+        }
+    }
+}
+
 description 'history-walk-slides'
 group 'com.github.pambrose'
-version '1.8.1'
+version '1.8.2'
 
 repositories {
     google()
