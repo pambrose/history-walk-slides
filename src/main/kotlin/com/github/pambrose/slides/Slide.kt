@@ -1,6 +1,6 @@
 package com.github.pambrose.slides
 
-import mu.two.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 class Slide(
   val id: Int,
@@ -70,5 +70,7 @@ class Slide(
 
   override fun toString() = "Slide(id='$id', title='$title', choices=${choices.size}, parentSlide=$parentSlide)"
 
-  companion object : KLogging()
+  companion object {
+    private val logger = KotlinLogging.logger {}
+  }
 }

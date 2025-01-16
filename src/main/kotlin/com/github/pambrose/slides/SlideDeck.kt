@@ -1,6 +1,6 @@
 package com.github.pambrose.slides
 
-import mu.two.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 class SlideDeck {
   private val slideList = mutableListOf<Slide>()
@@ -85,7 +85,8 @@ class SlideDeck {
     slideIdMap.computeIfAbsent(slide.id) { mutableListOf() } += slide
   }
 
-  companion object : KLogging() {
+  companion object {
+    private val logger = KotlinLogging.logger {}
     const val ROOT = "/"
 
     fun slideDeck(block: SlideDeck.() -> Unit) =
