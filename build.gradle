@@ -10,7 +10,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'com.github.pambrose.history-walk-slides'
             artifactId = 'history-walk-slides'
-            version = '1.8.2'
+            version = '1.8.3'
 
             from components.java
         }
@@ -19,7 +19,7 @@ publishing {
 
 description 'history-walk-slides'
 group 'com.github.pambrose'
-version '1.8.2'
+version '1.8.3'
 
 repositories {
     google()
