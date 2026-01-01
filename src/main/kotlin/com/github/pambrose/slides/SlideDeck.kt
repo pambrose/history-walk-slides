@@ -24,7 +24,15 @@ class SlideDeck {
 
   fun goBack(offset: Int): Slide {
     require(offset != 0) { "Offset cannot be 0" }
-    return Slide(-1, "", "", false, false, this, offset)
+    return Slide(
+      id = -1,
+      title = "",
+      content = "",
+      root = false,
+      success = false,
+      slideDeck = this,
+      offset = offset,
+    )
   }
 
   private fun validateSlideDeck() {
@@ -62,7 +70,7 @@ class SlideDeck {
     val slide = if (pathName == ROOT) rootSlide else slideMap[pathName]
 
     return if (slide == null) {
-      logger.error("Invalid slide name: $pathName")
+      logger.error { "Invalid slide name: $pathName" }
       rootSlide
     } else {
       slide
@@ -101,7 +109,7 @@ class SlideDeck {
               slide.validateSlide()
             }
 
-          // Remove slides that are no in main tree
+          // Remove slides that are not in the main tree
           slideIdMap.values.forEach { slideList -> slideList.removeIf { it.isSubTree } }
 
           // Validate it

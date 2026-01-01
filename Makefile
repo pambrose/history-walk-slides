@@ -3,7 +3,7 @@ default: versioncheck
 clean:
 	./gradlew clean
 
-build:
+build: clean
 	./gradlew build -xtest
 
 jar: clean
@@ -16,4 +16,4 @@ depends:
 	./gradlew dependencies
 
 upgrade-wrapper:
-	./gradlew wrapper --gradle-version=8.12 --distribution-type=bin
+	./gradlew wrapper --gradle-version=9.2.1 --distribution-type=bin
